@@ -92,6 +92,27 @@ def add_person():
     flash('New person was successfully inserted')
     return redirect(url_for('show_persons'))
 
+
+@app.route( '/person/<int:person_id>/classtech_techer' )
+def show_classtech_techer(person_id):
+    db = get_db()
+    cur = db.execute( 'select * from classtech_techer where person_id = ?',str(person_id) )
+    items = cur.fetchall()
+    return render_template( 'show_classtech_techer.html' , info={'items':items,'person_id':person_id})
+
+@app.route( '/person/<int:person_id>/classtech_techer/add' , methods=[ 'POST' ])
+def add_classtech_techer(person_id):
+    print(request.form)
+    if not session.get( 'logged_in' ):
+        abort(401)
+    db = get_db()
+    db.execute('insert into classtech_techer (person_id,basictech_days,shortterm_days,totalwork_days,systemtraining_machanical_days,systemtraining_machanical_stucount,systemtraining_other_days,compulsorycourse_techhour,compulsorycourse_stucount,elective_techhour,elective_stucount,graduationproject_stucount,nuetiac_swjtu,nuetiac_sichuan,nuetiac_nation,make_techdays,note) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)' ,[person_id,request.form[ 'basictech_days' ],request.form['shortterm_days'],request.form['totalwork_days'],request.form['systemtraining_machanical_days'],request.form['systemtraining_machanical_stucount'],request.form['systemtraining_other_days'],request.form['compulsorycourse_techhour'],request.form['compulsorycourse_stucount'],request.form['elective_techhour'],request.form['elective_stucount'],request.form['graduationproject_stucount'],request.form['nuetiac_swjtu'],request.form['nuetiac_sichuan'],request.form['nuetiac_nation'],request.form['make_techdays'],request.form['note']])
+    db.commit()
+    print("commit")
+    flash('New classtech_techer log was successfully inserted')
+    return redirect(url_for('show_classtech_techer',person_id = person_id))
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None

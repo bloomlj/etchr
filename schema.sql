@@ -17,9 +17,9 @@ drop table if exists classtech_techer;
 create table classtech_techer (
   id integer primary key autoincrement,
   person_id int not null,
-  basictech_days int not null,
-  shortterm_days int not null,
-  totalwork_days int not null,
+  basictech_days int not null,--基础教学天数
+  shortterm_days int not null,--短学期教学天数
+  totalwork_days int not null,--总工作天数
   systemtraining_machanical_days int not null,--机械综合训练天数
   systemtraining_machanical_stucount int not null,--机械综合训练人数
   systemtraining_other_days int not null,--其它综合训练天数
@@ -34,7 +34,7 @@ create table classtech_techer (
   make_techdays int not null,--加工指导天数
   created_time datetime now,
   updated_time datetime now,
-  note text not null
+  note text not null,--备注
 );
 drop table if exists afterclass_techer;
 create table afterclass_techer (

@@ -20,13 +20,13 @@
               <option value="teacher">专业技术岗</option>
               <option value="worker">工勤岗、外聘人员</option>
            </select>
-        <dd><input type=submit value=“提交”>
+        <dd><input type=submit value=提交>
       </dl>
     </form>
   {% endif %}
   <ul class=entries>
   {% for person in persons %}
-    <li><h2>{{ person.name }}</h2>{{ person.title|safe }}
+    <li>#{{ person.id }}  - {{ person.name }} - {{ person.title|safe }}  - {{ person.wageid }} - <a href="{{url_for( 'show_classtech_techer' , person_id= person.id )}}" >教学工作量</a>
   {% else %}
     <li><em>Unbelievable.  No entries here so far</em>
   {% endfor %}
