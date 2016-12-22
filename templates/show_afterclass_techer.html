@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if session.logged_in %}
+    <form action="{{ url_for('add_classtech_techer',person_id =info['person_id'] ) }}" method=post class=add-entry>
+      <dl>
+        <dt>基础教学天数:
+        <dd><input type=text size=30 name=basictech_days>
+        <dt>短学期教学天数:
+        <dd><input type=input size="30" name="shortterm_days" />
+          <dt>总工作天数:
+          <dd><input type=input size="30" name="totalwork_days" />
+            <dt>机械综合训练天数:
+            <dd><input type=input size="30" name="systemtraining_machanical_days" />
+              <dt>机械综合训练人数:
+              <dd><input type=input size="30" name="systemtraining_machanical_stucount" />
+                <dt>其它综合训练天数:
+                <dd><input type=input size="30" name="systemtraining_other_days" />
+                  <dt>必修课学时:
+                  <dd><input type=input size="30" name="compulsorycourse_techhour" />
+                    <dt>必修课人数:
+                    <dd><input type=input size="30" name="compulsorycourse_stucount" />
+                      <dt>选修课学时:
+                      <dd><input type=input size="30" name="elective_techhour" />
+                        <dt>选修人数:
+                        <dd><input type=input size="30" name="elective_stucount" />
+
+
+                          <dt>毕业设计人数:
+                          <dd><input type=input size="30" name="graduationproject_stucount" />
+                            <dt>工程训练大赛校赛:
+                            <dd><input type=input size="30" name="nuetiac_swjtu" />
+                              <dt>工程训练大赛省赛:
+                              <dd><input type=input size="30" name="nuetiac_sichuan" />
+                                <dt>工程训练大赛国赛:
+                                <dd><input type=input size="30" name="nuetiac_nation" />
+                                  <dt>加工指导天数:
+                                  <dd><input type=input size="30" name="make_techdays" />
+                                    <dt>备注:
+                                    <dd><textarea name="note"></textarea>
+       <dd><input type=submit value=“提交”>
+      </dl>
+    </form>
+  {% endif %}
+  <ul class=entries>
+  {% for item in info['items'] %}
+    <li><h2>{{ item.person_id }}</h2>{{ item.basictech_days }}
+  {% else %}
+    <li><em>Unbelievable.  No entries here so far</em>
+  {% endfor %}
+  </ul>
+{% endblock %}
