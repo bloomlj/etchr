@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if session.logged_in %}
+    <h2>{{info.person_id}}</h2>
+    <ul class=entries>
+    {% for entry in info.items_classtech_techer %}
+      <li><h2>{{ entry.person_id }}</h2>{{ entry.note|safe }}
+    {% else %}
+      <li><em>Unbelievable.  No entries here so far</em>
+    {% endfor %}
+    </ul>
+
+    <ul class=entries>
+    {% for entry in info.items_classtech_worker %}
+      <li><h2>{{ entry.person_id }}</h2>{{ entry.note|safe }}
+    {% else %}
+      <li><em>Unbelievable.  No entries here so far</em>
+    {% endfor %}
+    </ul>
+
+  {% endif %}
+
+{% endblock %}

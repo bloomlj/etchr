@@ -68,7 +68,7 @@ drop table if exists classtech_worker;
 create table classtech_worker (
   id integer primary key autoincrement,
   person_id int not null,
-  basictech_days int not null,
+  basictech_days int not null,--基础教学天数
   systemtraining_days int not null,--综合训练天数
   contest_days int not null,--竞赛教学天数
   shortterm_days int not null,--短学期教学天数

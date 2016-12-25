@@ -26,7 +26,11 @@
   {% endif %}
   <ul class=entries>
   {% for person in persons %}
-    <li>#{{ person.id }}  - {{ person.name }} - {{ person.title|safe }}  - {{ person.wageid }} - <a href="{{url_for( 'show_classtech_techer' , person_id= person.id )}}" >教学工作量</a>
+     {% if person.category == 'teacher'%}
+     <li>#{{ person.id }}  - {{ person.name }} - {{ person.title|safe }}  - {{ person.wageid }} - <a href="{{url_for( 'show_classtech_techer' , person_id= person.id )}}" >教学工作量</a>  <a href="{{url_for( 'show_afterclass_techer' , person_id= person.id )}}" >非教学工作量</a>
+     {% else %}
+    <li>#{{ person.id }}  - {{ person.name }} - {{ person.title|safe }}  - {{ person.wageid }} - <a href="{{url_for( 'show_classtech_worker' , person_id= person.id )}}" >教学工作量</a>  <a href="{{url_for( 'show_afterclass_worker' , person_id= person.id )}}" >非教学工作量</a>
+      {% endif %} <li></li>
   {% else %}
     <li><em>Unbelievable.  No entries here so far</em>
   {% endfor %}

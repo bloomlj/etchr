@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if session.logged_in %}
+    <form action="{{ url_for('add_classtech_worker',person_id =info['person_id'] ) }}" method=post class=add-entry>
+      <dl>
+        <dt>基础教学天数:
+        <dd><input type=text size=30 name=basictech_days>
+        <dt>综合训练天数:
+        <dd><input type=input size="30" name="systemtraining_days" />
+          <dt>竞赛教学天数:
+          <dd><input type=input size="30" name="contest_days" />
+            <dt>短学期教学天数:
+            <dd><input type=input size="30" name="shortterm_days" />
+            <dt>备注:
+            <dd><textarea name="note"></textarea>
+       <dd><input type=submit value=“提交”>
+      </dl>
+    </form>
+  {% endif %}
+  <ul class=entries>
+  {% for item in info['items'] %}
+    <li><h2>{{ item.person_id }}</h2>{{ item.basictech_days }}
+  {% else %}
+    <li><em>Unbelievable.  No entries here so far</em>
+  {% endfor %}
+  </ul>
+{% endblock %}

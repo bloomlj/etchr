@@ -112,6 +112,92 @@ def add_classtech_techer(person_id):
     flash('New classtech_techer log was successfully inserted')
     return redirect(url_for('show_classtech_techer',person_id = person_id))
 
+@app.route( '/person/<int:person_id>/afterclass_techer' )
+def show_afterclass_techer(person_id):
+    db = get_db()
+    cur = db.execute( 'select * from afterclass_techer where person_id = ?',str(person_id) )
+    items = cur.fetchall()
+    return render_template( 'show_afterclass_techer.html' , info={'items':items,'person_id':person_id})
+
+@app.route( '/person/<int:person_id>/afterclass_techer/add' , methods=[ 'POST' ])
+def add_afterclass_techer(person_id):
+    print(request.form)
+    if not session.get( 'logged_in' ):
+        abort(401)
+    db = get_db()
+    db.execute('insert into afterclass_techer (person_id,contestproject_swjtu,contestproject_sichuan,contestproject_nation,customproject,master_course,techresearch_swjtu_project,techresearch_etc_newitem,techresearch_etc_olditem,techresearch_etc_module,techresearch_etc_course,techbook,paper_c,paper_issn,paper_noissn,mapcheck_count,course_director,project_director,master_platfom,note) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)' ,[person_id,request.form[ 'contestproject_swjtu' ],request.form['contestproject_sichuan'],request.form['contestproject_nation'],request.form['customproject'],request.form['master_course'],request.form['techresearch_swjtu_project'],request.form['techresearch_etc_newitem'],request.form['techresearch_etc_olditem'],request.form['techresearch_etc_module'],request.form['techresearch_etc_course'],request.form['techbook'],request.form['paper_c'],request.form['paper_issn'],request.form['paper_noissn'],request.form['mapcheck_count'],request.form['course_director'],request.form['project_director'] ,request.form['master_platfom'] ,request.form['note']])
+    db.commit()
+    print("commit")
+    flash('New  aftertech_techer log was successfully inserted')
+    return redirect(url_for('show_afterclass_techer',person_id = person_id))
+
+@app.route( '/person/<int:person_id>/classtech_worker' )
+def show_classtech_worker(person_id):
+    db = get_db()
+    cur = db.execute( 'select * from classtech_worker where person_id = ?',str(person_id) )
+    items = cur.fetchall()
+    return render_template( 'show_classtech_worker.html' , info={'items':items,'person_id':person_id})
+
+@app.route( '/person/<int:person_id>/classtech_worker/add' , methods=[ 'POST' ])
+def add_classtech_worker(person_id):
+    print(request.form)
+    if not session.get( 'logged_in' ):
+        abort(401)
+    db = get_db()
+    db.execute('insert into classtech_worker (person_id,basictech_days,systemtraining_days,contest_days,shortterm_days,note) values (?,?,?,?,?,?)' ,[person_id,request.form[ 'basictech_days' ],request.form[ 'systemtraining_days' ],request.form[ 'contest_days' ],request.form['shortterm_days'],request.form['note']])
+    db.commit()
+    print("commit")
+    flash('New classtech_worker log was successfully inserted')
+    return redirect(url_for('show_classtech_worker',person_id = person_id))
+
+@app.route( '/person/<int:person_id>/afterclass_worker' )
+def show_afterclass_worker(person_id):
+    db = get_db()
+    cur = db.execute( 'select * from afterclass_worker where person_id = ?',str(person_id) )
+    items = cur.fetchall()
+    return render_template( 'show_afterclass_worker.html' , info={'items':items,'person_id':person_id})
+
+@app.route( '/person/<int:person_id>/afterclass_worker/add' , methods=[ 'POST' ])
+def add_afterclass_worker(person_id):
+    #print(request.form)
+    #println('xxx')
+    #print(request.form[ 'contestproject' ])
+    #request.form[ 'techresearch_swjtu_project' ],request.form[ 'techresearch_etc_newitem' ],request.form['techresearch_etc_olditem'],request.form['techresearch_etc_module'],request.form['techresearch_etc_course'],request.form['techbook'],request.form['paper_c'],request.form['paper_issn'],request.form['paper_noissn'],request.form['making_nuetiac_days'],request.form['making_other_days'],request.form['note'];
+    if not session.get( 'logged_in' ):
+        abort(401)
+    db = get_db()
+
+    db.execute('insert into afterclass_worker (person_id,contestproject,techresearch_swjtu_project,techresearch_etc_newitem,techresearch_etc_olditem,techresearch_etc_module,techresearch_etc_course,techbook,paper_c,paper_issn,paper_noissn,making_nuetiac_days,making_other_days,note) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)',[person_id,request.form[ 'contestproject' ],request.form[ 'techresearch_swjtu_project' ],request.form[ 'techresearch_etc_newitem' ],request.form['techresearch_etc_olditem'],request.form['techresearch_etc_module'],request.form['techresearch_etc_course'],request.form['techbook'],request.form['paper_c'],request.form['paper_issn'],request.form['paper_noissn'],request.form['making_nuetiac_days'],request.form['making_other_days'],request.form['note']])
+    db.commit()
+    print("commit")
+    flash('New classtech_worker log was successfully inserted')
+    return redirect(url_for('show_afterclass_worker',person_id = person_id))
+
+@app.route( '/report/allwork' )
+def report_allwork():
+    db = get_db()
+    cur = db.execute( 'select * from classtech_techer')
+    items_classtech_techer = cur.fetchall()
+    cur = db.execute( 'select * from classtech_worker')
+    items_classtech_worker = cur.fetchall()
+    cur = db.execute( 'select * from afterclass_techer')
+    items_afterclass_techer = cur.fetchall()
+    cur = db.execute( 'select * from afterclass_worker')
+    items_afterclass_worker = cur.fetchall()
+    return render_template( 'report/allwork.html' , info = {'items_classtech_techer':items_classtech_techer,'items_classtech_worker':items_classtech_worker,'items_afterclass_techer':items_afterclass_techer,'items_afterclass_worker':items_afterclass_worker})
+
+@app.route( '/person/<int:person_id>/mywork' )
+def report_mywork(person_id):
+    db = get_db()
+    cur = db.execute( 'select * from classtech_techer where person_id = ?',str(person_id) )
+    items_classtech_techer = cur.fetchall()
+    cur = db.execute( 'select * from classtech_worker where person_id = ?',str(person_id) )
+    items_classtech_worker = cur.fetchall()
+    cur = db.execute( 'select * from afterclass_techer where person_id = ?',str(person_id) )
+    items_afterclass_techer = cur.fetchall()
+    cur = db.execute( 'select * from afterclass_worker where person_id = ?',str(person_id) )
+    items_afterclass_worker = cur.fetchall()
+    return render_template( 'report/mywork.html' , info = {'person_id':person_id,'items_classtech_techer':items_classtech_techer,'items_classtech_worker':items_classtech_worker,'items_afterclass_techer':items_afterclass_techer,'items_afterclass_worker':items_afterclass_worker})
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -124,7 +210,7 @@ def login():
         else:
             session['logged_in'] = True
             flash('You were logged in')
-            return redirect(url_for('show_entries'))
+            return redirect(url_for('show_persons'))
     return render_template('login.html', error=error)
 
 @app.route('/logout')
