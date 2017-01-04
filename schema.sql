@@ -34,7 +34,7 @@ create table classtech_techer (
   make_techdays NUMERIC not null,--加工指导天数
   created_time datetime now,
   updated_time datetime now,
-  note text not null,--备注
+  note text not null  --备注
 );
 drop table if exists afterclass_techer;
 create table afterclass_techer (

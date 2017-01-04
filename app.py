@@ -7,7 +7,6 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 
 
-
 # Load default config and override config from an environment variable
 app.config.update(dict(
     DATABASE=os.path.join(app.root_path,  'etchr.db' ),
@@ -53,7 +52,7 @@ def homepage():
     db = get_db()
     cur = db.execute( 'select title, text from entries order by id desc' )
     entries = cur.fetchall()
-    return render_template( 'show_entries.html' , entries=entries)
+    return render_template( 'index.html' , entries=entries)
 
 
 @app.route( '/entries' )
@@ -82,7 +81,7 @@ def show_persons():
 
 @app.route( '/person/add' , methods=[ 'POST' ])
 def add_person():
-    print(request.form)
+    #print(request.form)
     if not session.get( 'logged_in' ):
         abort(401)
     db = get_db()
@@ -90,6 +89,18 @@ def add_person():
     db.commit()
     print("commit")
     flash('New person was successfully inserted')
+    return redirect(url_for('show_persons'))
+
+@app.route( '/person/<int:person_id>/del' , methods=[ 'DELETE' ])
+def del_person(person_id):
+    #print(request.form)
+    if not session.get( 'logged_in' ):
+        abort(401)
+    db = get_db()
+    db.execute('DELETE from  person  where id = ?' ,str(person_id) )
+    db.commit()
+    print("commit")
+    flash('A person was successfully DELETED')
     return redirect(url_for('show_persons'))
 
 
