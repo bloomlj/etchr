@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
   {% if session.logged_in %}
-    <form action="{{ url_for('add_afterclass_techer',person_id =info['person_id'] ) }}" method=post class=add-entry>
+    <form action="{{ url_for('add_afterclass_teacher',person_id =info['person_id'] ) }}" method=post class=add-entry>
       <dl>
         <dt>实验竞赛活动项目校级:
         <dd><input type=text size=30 name=contestproject_swjtu>
@@ -49,7 +49,25 @@
   {% endif %}
   <ul class=entries>
   {% for item in info['items'] %}
-    <li><h2>{{ item.person_id }}</h2>{{ item.contestproject_swjtu }}
+    <li><h2>{{ item.person_id }}</h2>
+      实验竞赛活动项目校级:{{ item.contestproject_swjtu }} <br/>
+      实验竞赛活动省级项目:{{item.contestproject_sichuan}} <br/>
+      国家级实验竞赛活动:{{item.contestproject_nation}} <br/>
+      个性化实验竞赛项目:{{item.customproject}} <br/>
+      研究生课程:{{item.master_course}} <br/>
+      学校教改项目:{{item.techresearch_swjtu_project}} <br/>
+      中心教改项目新开项目:{{item.techresearch_etc_newitem}} <br/>
+      中心教改项目现有项目改革:{{item.techresearch_etc_olditem}} <br/>
+      中心教改项目模块改革:{{item.techresearch_etc_module}} <br/>
+      中心教改项目课程改革:{{item.techresearch_etc_course}} <br/>
+      教材:{{item.techbook}} <br/>
+      C级论文:{{item.paper_c}} <br/>
+      有公开刊号论文:{{item.paper_issn}} <br/>
+      无公开刊号论文:{{item.paper_noissn}} <br/>
+      审核图纸:{{item.mapcheck_count}} <br/>
+      课程负责人:{{item.course_director}} <br/>
+      项目负责人:{{item.project_director}} <br/>
+      研究生平台:{{item.master_platfom}}
   {% else %}
     <li><em>Unbelievable.  No entries here so far</em>
   {% endfor %}

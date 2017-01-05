@@ -26,13 +26,22 @@
   {% endif %}
   <ul class=entries>
   {% for person in persons %}
+    <li>
+    <h2>#{{ person.id }}  - {{ person.name }}</h2>
+      岗位：{{ person.title|safe }}<br/>
+      工资号：{{ person.wageid }}<br/>
+      性别：{{person.sex}}<br/>
+      类别:{{person.category}}<br/>
+    </li>
      {% if person.category == 'teacher'%}
-     <li>#{{ person.id }}  - {{ person.name }} - {{ person.title|safe }}  - {{ person.wageid }} - <form action="{{ url_for('del_person',person_id=person.id) }}" method="DELETE"><button>删除</button></form> -<a href="{{url_for( 'show_classtech_techer' , person_id= person.id )}}" >教学工作量</a>  <a href="{{url_for( 'show_afterclass_techer' , person_id= person.id )}}" >非教学工作量</a>
+     <li><form action="{{ url_for('del_person',person_id=person.id) }}" method="DELETE"><button>删除</button></form> -<a href="{{url_for( 'show_classtech_teacher' , person_id= person.id )}}" >教学工作量</a>  <a href="{{url_for( 'show_afterclass_teacher' , person_id= person.id )}}" >非教学工作量</a>  <a href="{{url_for( 'show_inno_days' , person_id= person.id )}}" >创新实践</a>  <a href="{{url_for( 'show_factors_teacher' , person_id= person.id )}}" >系数设置</a>  - <a href="{{url_for( 'report_mywork_teacher' , person_id= person.id )}}" >报表</a>
+     </li>
      {% else %}
-    <li>#{{ person.id }}  - {{ person.name }} - {{ person.title|safe }}  - {{ person.wageid }}
+    <li>
       <form action="{{ url_for('del_person',person_id=person.id) }}" method="DELETE"><button>删除</button></form>
-       <a href="{{url_for( 'show_classtech_worker' , person_id= person.id )}}" >教学工作量</a>  <a href="{{url_for( 'show_afterclass_worker' , person_id= person.id )}}" >非教学工作量</a>
-      {% endif %} <li></li>
+       <a href="{{url_for( 'show_classtech_worker' , person_id= person.id )}}" >教学工作量</a>  <a href="{{url_for( 'show_afterclass_worker' , person_id= person.id )}}" >非教学工作量</a>  <a href="{{url_for( 'show_inno_days' , person_id= person.id )}}" >创新实践</a><a href="{{url_for( 'add_factors_worker' , person_id= person.id )}}" >系数设置</a>  - <a href="{{url_for( 'report_mywork_worker' , person_id= person.id )}}" >报表</a>
+     </li>
+      {% endif %}
   {% else %}
     <li><em>Unbelievable.  No entries here so far</em>
   {% endfor %}

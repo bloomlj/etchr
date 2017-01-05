@@ -13,8 +13,8 @@ create table person (
   title varchar(20) not null,
   category varchar(20) not null
 );
-drop table if exists classtech_techer;
-create table classtech_techer (
+drop table if exists classtech_teacher;
+create table classtech_teacher (
   id integer primary key autoincrement,
   person_id int not null,
   basictech_days NUMERIC not null,--基础教学天数
@@ -36,8 +36,8 @@ create table classtech_techer (
   updated_time datetime now,
   note text not null  --备注
 );
-drop table if exists afterclass_techer;
-create table afterclass_techer (
+drop table if exists afterclass_teacher;
+create table afterclass_teacher (
   id integer primary key autoincrement,
   person_id int not null,
   contestproject_swjtu NUMERIC not null, --实验竞赛活动项目校级
@@ -93,6 +93,46 @@ create table afterclass_worker (
   paper_noissn NUMERIC not null,--无公开刊号论文
   making_nuetiac_days NUMERIC not null,--工程训练大赛加工
   making_other_days NUMERIC not null,--其它加工
+  created_time datetime now,
+  updated_time datetime now,
+  note text not null
+);
+
+drop table if exists inno_days;
+
+create table inno_days (
+  id integer primary key autoincrement,
+  person_id int not null,
+  inno_days NUMERIC not null,--折合后创新实践工作日数
+  created_time datetime now,
+  updated_time datetime now,
+  note text not null
+);
+
+
+drop table if exists factors_teacher;
+
+create table factors_teacher (
+  id integer primary key autoincrement,
+  person_id int not null,
+  s_evaluation NUMERIC not null,--S权重
+  s_environment NUMERIC not null,--S环境系数
+  s_temperature NUMERIC not null,--S高温系数
+
+  created_time datetime now,
+  updated_time datetime now,
+  note text not null
+);
+
+drop table if exists factors_worker;
+
+create table factors_worker (
+  id integer primary key autoincrement,
+  person_id int not null,
+  s_evaluation NUMERIC not null,--S权重
+  s_environment NUMERIC not null,--S环境系数
+  s_temperature NUMERIC not null,--S高温系数
+
   created_time datetime now,
   updated_time datetime now,
   note text not null

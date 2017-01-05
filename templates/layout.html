@@ -1,25 +1,153 @@
 <!doctype html>
-<title>西南交通大学工程训练中心绩效计算工具</title>
-<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
-<div class=page>
-  <h1>西南交通大学工程训练中心绩效计算工具</h1>
-  <div class=metanav>
-  {% if not session.logged_in %}
-    <a href="{{ url_for('login') }}">log in</a>
-  {% else %}
-    <a href="{{ url_for('logout') }}">log out</a>
-  {% endif %}
-  </div>
-  <div class="nav">
-    <a href="{{ url_for('homepage') }}">首页</a>
-    {% if not session.logged_in %}
-    {% else %}
-      <a href="{{ url_for('report_allwork') }}">统计报告</a>
-      <a href="{{ url_for('show_persons') }}">人员</a>
-    {% endif %}
-  </div>
-  {% for message in get_flashed_messages() %}
-    <div class=flash>{{ message }}</div>
-  {% endfor %}
-  {% block body %}{% endblock %}
-</div>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>西南交通大学工程训练中心绩效计算工具</title>
+    <link rel="stylesheet"  href="{{url_for('static',filename='foundation.min.css')}}">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+
+  </head>
+  <body>
+
+    <!-- Start Top Bar -->
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <ul class="menu">
+          <li class="menu-text"><a href="{{ url_for('homepage') }}">工程训练中心绩效计算工具</a></li>
+        </ul>
+      </div>
+      <div class="top-bar-right">
+        <ul class="menu">
+          {% if not session.logged_in %}
+            <li><a href="{{ url_for('login') }}">登录</a></li>
+          {% else %}
+            <li><a href="{{ url_for('logout') }}">退出</a></li>
+          {% endif %}
+     <!--
+          <li><a href="#">One</a></li>
+          <li><a href="#">Two</a></li>
+          <li><a href="#">Three</a></li>
+          <li><a href="#">Four</a></li>
+        -->
+        </ul>
+      </div>
+    </div>
+    <!-- End Top Bar -->
+
+    <div class="callout large primary">
+      {% for message in get_flashed_messages() %}
+        <div class=flash>{{ message }}</div>
+      {% endfor %}
+        <!--<div class="row column text-center">
+       <h1>Our Blog</h1>
+      </div>-->
+    </div>
+
+    <div class="row" id="content">
+      <div class="medium-8 columns">
+
+        {% block body %}{% endblock %}
+
+
+        <div class="blog-post">
+          <h3>Awesome blog post title <small>3/6/2015</small></h3>
+          <img class="thumbnail" src="http://placehold.it/850x350">
+          <p>Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus.</p>
+          <div class="callout">
+            <ul class="menu simple">
+              <li><a href="#">Author: Mike Mikers</a></li>
+              <li><a href="#">Comments: 3</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="blog-post">
+          <h3>Awesome blog post title <small>3/6/2015</small></h3>
+          <img class="thumbnail" src="http://placehold.it/850x350">
+          <p>Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus.</p>
+          <div class="callout">
+            <ul class="menu simple">
+              <li><a href="#">Author: Mike Mikers</a></li>
+              <li><a href="#">Comments: 3</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="blog-post">
+          <h3>Awesome blog post title <small>3/6/2015</small></h3>
+          <img class="thumbnail" src="http://placehold.it/850x350">
+          <p>Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus.</p>
+          <div class="callout">
+            <ul class="menu simple">
+              <li><a href="#">Author: Mike Mikers</a></li>
+              <li><a href="#">Comments: 3</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="blog-post">
+          <h3>Awesome blog post title <small>3/6/2015</small></h3>
+          <img class="thumbnail" src="http://placehold.it/850x350">
+          <p>Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus.</p>
+          <div class="callout">
+            <ul class="menu simple">
+              <li><a href="#">Author: Mike Mikers</a></li>
+              <li><a href="#">Comments: 3</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="medium-3 columns" data-sticky-container>
+        <div class="sticky" data-sticky data-anchor="content">
+          <ul>
+          <li><a href="{{ url_for('homepage') }}">首页</a></li>
+        </ul>
+        <h4>设定</h4>
+        <ul>
+        {% if not session.logged_in %}
+        {% else %}
+          <li><a href="{{ url_for('show_persons') }}">系数设置</a></li>
+        {% endif %}
+        </ul>
+          <h4>统计</h4>
+          <ul>
+          {% if not session.logged_in %}
+          {% else %}
+            <li><a href="{{ url_for('report_allwork') }}">统一报告</a></li>
+            <li><a href="{{ url_for('show_persons') }}">通过人员</a></li>
+          {% endif %}
+          </ul>
+
+          <h4>数据</h4>
+          <ul>
+            <li><a href="{{ url_for('show_persons') }}">人员</a></li>
+            <li><a href="{{ url_for('show_persons') }}">课内</a></li>
+            <li><a href="{{ url_for('show_persons') }}">课外</a></li>
+            <li><a href="{{ url_for('show_persons') }}">创新</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="row column">
+      <ul class="pagination" role="navigation" aria-label="Pagination">
+        <li class="disabled">Previous</li>
+        <li class="current"><span class="show-for-sr">You're on page</span> 1</li>
+        <li><a href="#" aria-label="Page 2">2</a></li>
+        <li><a href="#" aria-label="Page 3">3</a></li>
+        <li><a href="#" aria-label="Page 4">4</a></li>
+        <li class="ellipsis"></li>
+        <li><a href="#" aria-label="Page 12">12</a></li>
+        <li><a href="#" aria-label="Page 13">13</a></li>
+        <li><a href="#" aria-label="Next page">Next</a></li>
+      </ul>
+    </div>
+
+    <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='foundation.min.js') }}"></script>
+    <script>
+      $(document).foundation();
+    </script>
+  </body>
+</html>

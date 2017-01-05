@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
   {% if session.logged_in %}
-    <form action="{{ url_for('add_classtech_techer',person_id =info['person_id'] ) }}" method=post class=add-entry>
+    <form action="{{ url_for('add_classtech_teacher',person_id =info['person_id'] ) }}" method=post class=add-entry>
       <dl>
         <dt>基础教学天数:
         <dd><input type=text size=30 name=basictech_days>
@@ -43,7 +43,22 @@
   {% endif %}
   <ul class=entries>
   {% for item in info['items'] %}
-    <li><h2>{{ item.person_id }}</h2>{{ item.basictech_days }}
+    <li><h2>{{ item.person_id }}</h2>
+      基础教学天数：{{ item.basictech_days }} <br/>
+      短学期教学天数:{{item.shortterm_days}} <br/>
+      总工作天数:{{item.totalwork_days}} <br/>
+      机械综合训练天数:{{item.systemtraining_machanical_days}} <br/>
+      机械综合训练人数:{{item.systemtraining_machanical_stucount}} <br/>
+      其它综合训练天数:{{item.systemtraining_other_days}} <br/>
+      必修课学时:{{item.compulsorycourse_techhour}} <br/>
+      必修课人数:{{item.compulsorycourse_stucount}} <br/>
+      选修课学时:{{item.elective_techhour}} <br/>
+      选修人数:{{item.elective_stucount}} <br/>
+      毕业设计人数:{{item.graduationproject_stucount}} <br/>
+      工程训练大赛校赛:{{item.nuetiac_swjtu}} <br/>
+      工程训练大赛省赛:{{item.nuetiac_sichuan}} <br/>
+      工程训练大赛国赛:{{item.nuetiac_nation}} <br/>
+      加工指导天数:{{item.make_techdays}}
   {% else %}
     <li><em>Unbelievable.  No entries here so far</em>
   {% endfor %}
