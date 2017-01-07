@@ -1,29 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
   {% if session.logged_in %}
-    <form action="{{ url_for('add_person') }}" method=post class=add-entry>
-      <dl>
-        <dt>姓名:
-        <dd><input type=text size=30 name=name>
-        <dt>工资号:
-        <dd><input type=input size="30" name="wageid" />
-        <dt>性别:
-          <dd><select name="sex">
-            <option value="男">男</option>
-            <option value="女">女</option>
-          </select>
-        <dt>岗位:
-          <dd><input type="title" size="30" name="title" />
-        <dt>类别:
-          <dd>
-            <select name="category">
-              <option value="teacher">专业技术岗</option>
-              <option value="worker">工勤岗、外聘人员</option>
-           </select>
-        <dd><input type=submit value=提交>
-      </dl>
-    </form>
-  {% endif %}
+
   <ul class=entries>
   {% for person in persons %}
     <li>
@@ -35,30 +13,27 @@
     </li>
      {% if person.category == 'teacher'%}
      <li>
-       <a href="{{ url_for('del_person',person_id=person.id) }}" >删除</a>
-       <!--
+
        - <a href="{{url_for( 'show_classtech_teacher' , person_id= person.id )}}" >教学工作量</a>
        - <a href="{{url_for( 'show_afterclass_teacher' , person_id= person.id )}}" >非教学工作量</a>
        - <a href="{{url_for( 'show_inno_days' , person_id= person.id )}}" >创新实践</a>
        - <a href="{{url_for( 'show_factors_teacher' , person_id= person.id )}}" >系数设置</a>
        - <a href="{{url_for( 'report_mywork_teacher' , person_id= person.id )}}" >报表</a>
-     -->
+
      </li>
      {% else %}
     <li>
-
-      <a href="{{ url_for('del_person',person_id=person.id) }}" >删除</a>
-      <!--
       <a href="{{url_for( 'show_classtech_worker' , person_id= person.id )}}" >教学工作量</a>
       <a href="{{url_for( 'show_afterclass_worker' , person_id= person.id )}}" >非教学工作量</a>
       <a href="{{url_for( 'show_inno_days' , person_id= person.id )}}" >创新实践</a>
-      <a href="{{url_for( 'add_factors_worker' , person_id= person.id )}}" >系数设置</a>
+      <a href="{{url_for( 'show_factors_worker' , person_id= person.id )}}" >系数设置</a>
       <a href="{{url_for( 'report_mywork_worker' , person_id= person.id )}}" >报表</a>
-    -->
      </li>
       {% endif %}
   {% else %}
     <li><em>Unbelievable.  No entries here so far</em>
   {% endfor %}
   </ul>
+  {% endif %}
+
 {% endblock %}

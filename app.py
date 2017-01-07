@@ -1,3 +1,4 @@
+#coding:utf-8
 # all the imports
 import os
 import sqlite3
@@ -79,6 +80,13 @@ def show_persons():
     items = cur.fetchall()
     return render_template( 'show_persons.html' , persons=items)
 
+@app.route( '/persons_actions' )
+def show_persons_actions():
+    db = get_db()
+    cur = db.execute( 'select * from person order by id desc' )
+    items = cur.fetchall()
+    return render_template( 'show_persons_actions.html' , persons=items)
+
 @app.route( '/person/add' , methods=[ 'POST' ])
 def add_person():
     #print(request.form)
@@ -91,7 +99,7 @@ def add_person():
     flash('New person was successfully inserted')
     return redirect(url_for('show_persons'))
 
-@app.route( '/person/<int:person_id>/del' , methods=[ 'DELETE' ])
+@app.route( '/person/<int:person_id>/del' , methods=[ 'get' ])
 def del_person(person_id):
     #print(request.form)
     if not session.get( 'logged_in' ):
@@ -117,11 +125,23 @@ def add_classtech_teacher(person_id):
     if not session.get( 'logged_in' ):
         abort(401)
     db = get_db()
-    db.execute('insert into classtech_teacher (person_id,basictech_days,shortterm_days,totalwork_days,systemtraining_machanical_days,systemtraining_machanical_stucount,systemtraining_other_days,compulsorycourse_techhour,compulsorycourse_stucount,elective_techhour,elective_stucount,graduationproject_stucount,nuetiac_swjtu,nuetiac_sichuan,nuetiac_nation,make_techdays,note) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)' ,[person_id,request.form[ 'basictech_days' ],request.form['shortterm_days'],request.form['totalwork_days'],request.form['systemtraining_machanical_days'],request.form['systemtraining_machanical_stucount'],request.form['systemtraining_other_days'],request.form['compulsorycourse_techhour'],request.form['compulsorycourse_stucount'],request.form['elective_techhour'],request.form['elective_stucount'],request.form['graduationproject_stucount'],request.form['nuetiac_swjtu'],request.form['nuetiac_sichuan'],request.form['nuetiac_nation'],request.form['make_techdays'],request.form['note']])
+    db.execute('insert into classtech_teacher (person_id,basictech_days,shortterm_days,totalwork_days,systemtraining_machanical_days,systemtraining_machanical_stucount,systemtraining_other_days,compulsorycourse_techhour,compulsorycourse_factor,compulsorycourse_stucount,elective_techhour,elective_isnew,elective_stucount,graduationproject_stucount,nuetiac_plan,nuetiac_make,nuetiac_swjtu,nuetiac_sichuan,nuetiac_nation,make_techdays,note) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)' ,[person_id,request.form[ 'basictech_days' ],request.form['shortterm_days'],request.form['totalwork_days'],request.form['systemtraining_machanical_days'],request.form['systemtraining_machanical_stucount'],request.form['systemtraining_other_days'],request.form['compulsorycourse_techhour'],request.form['compulsorycourse_factor'],request.form['compulsorycourse_stucount'],request.form['elective_techhour'],request.form['elective_isnew'],request.form['elective_stucount'],request.form['graduationproject_stucount'],request.form['nuetiac_plan'],request.form['nuetiac_make'],request.form['nuetiac_swjtu'],request.form['nuetiac_sichuan'],request.form['nuetiac_nation'],request.form['make_techdays'],request.form['note']])
     db.commit()
     print("commit")
     flash('New classtech_teacher log was successfully inserted')
     return redirect(url_for('show_classtech_teacher',person_id = person_id))
+
+@app.route( '/person/<int:person_id>/classtech_teacher/<int:id>/del' , methods=[ 'get' ])
+def del_classtech_teacher(person_id,id):
+    #print(request.form)
+    if not session.get( 'logged_in' ):
+        abort(401)
+    db = get_db()
+    db.execute('DELETE from classtech_teacher  where id = ?' ,str(id) )
+    db.commit()
+    print("commit")
+    flash('A log was successfully DELETED')
+    return redirect(url_for('show_classtech_teacher',person_id=person_id))
 
 @app.route( '/person/<int:person_id>/afterclass_teacher' )
 def show_afterclass_teacher(person_id):
@@ -136,11 +156,24 @@ def add_afterclass_teacher(person_id):
     if not session.get( 'logged_in' ):
         abort(401)
     db = get_db()
-    db.execute('insert into afterclass_teacher (person_id,contestproject_swjtu,contestproject_sichuan,contestproject_nation,customproject,master_course,techresearch_swjtu_project,techresearch_etc_newitem,techresearch_etc_olditem,techresearch_etc_module,techresearch_etc_course,techbook,paper_c,paper_issn,paper_noissn,mapcheck_count,course_director,project_director,master_platfom,note) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)' ,[person_id,request.form[ 'contestproject_swjtu' ],request.form['contestproject_sichuan'],request.form['contestproject_nation'],request.form['customproject'],request.form['master_course'],request.form['techresearch_swjtu_project'],request.form['techresearch_etc_newitem'],request.form['techresearch_etc_olditem'],request.form['techresearch_etc_module'],request.form['techresearch_etc_course'],request.form['techbook'],request.form['paper_c'],request.form['paper_issn'],request.form['paper_noissn'],request.form['mapcheck_count'],request.form['course_director'],request.form['project_director'] ,request.form['master_platfom'] ,request.form['note']])
+    db.execute('insert into afterclass_teacher (person_id,contestproject_swjtu,contestproject_sichuan,contestproject_nation,customproject,master_course,techresearch_swjtu_project,techresearch_etc_newitem,techresearch_etc_olditem,techresearch_etc_module,techresearch_etc_course,techbook,paper_c,paper_issn,paper_noissn,mapcheck_count,course_director,project_director,master_platfom,misc_workscore,note) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)' ,[person_id,request.form[ 'contestproject_swjtu' ],request.form['contestproject_sichuan'],request.form['contestproject_nation'],request.form['customproject'],request.form['master_course'],request.form['techresearch_swjtu_project'],request.form['techresearch_etc_newitem'],request.form['techresearch_etc_olditem'],request.form['techresearch_etc_module'],request.form['techresearch_etc_course'],request.form['techbook'],request.form['paper_c'],request.form['paper_issn'],request.form['paper_noissn'],request.form['mapcheck_count'],request.form['course_director'],request.form['project_director'] ,request.form['master_platfom'] ,request.form['misc_workscore'],request.form['note']])
     db.commit()
     print("commit")
     flash('New  aftertech_teacher log was successfully inserted')
     return redirect(url_for('show_afterclass_teacher',person_id = person_id))
+
+@app.route( '/person/<int:person_id>/afterclass_teacher/<int:id>/del' , methods=[ 'get' ])
+def del_afterclass_teacher(person_id,id):
+    #print(request.form)
+    if not session.get( 'logged_in' ):
+        abort(401)
+    db = get_db()
+    db.execute('DELETE from afterclass_teacher  where id = ?' ,str(id) )
+    db.commit()
+    print("commit")
+    flash('A log was successfully DELETED')
+    return redirect(url_for('show_afterclass_teacher',person_id=person_id))
+
 
 @app.route( '/person/<int:person_id>/classtech_worker' )
 def show_classtech_worker(person_id):
@@ -155,11 +188,24 @@ def add_classtech_worker(person_id):
     if not session.get( 'logged_in' ):
         abort(401)
     db = get_db()
-    db.execute('insert into classtech_worker (person_id,basictech_days,systemtraining_days,contest_days,shortterm_days,note) values (?,?,?,?,?,?)' ,[person_id,request.form[ 'basictech_days' ],request.form[ 'systemtraining_days' ],request.form[ 'contest_days' ],request.form['shortterm_days'],request.form['note']])
+    db.execute('insert into classtech_worker (person_id,basictech_days,systemtraining_days,contest_days,shortterm_days,totalwork_days,note) values (?,?,?,?,?,?,?)' ,[person_id,request.form[ 'basictech_days' ],request.form[ 'systemtraining_days' ],request.form[ 'contest_days' ],request.form['shortterm_days'],request.form['totalwork_days'],request.form['note']])
     db.commit()
     print("commit")
     flash('New classtech_worker log was successfully inserted')
     return redirect(url_for('show_classtech_worker',person_id = person_id))
+
+@app.route( '/person/<int:person_id>/classtech_worker/<int:id>/del' , methods=[ 'get' ])
+def del_classtech_worker(person_id,id):
+    #print(request.form)
+    if not session.get( 'logged_in' ):
+        abort(401)
+    db = get_db()
+    db.execute('DELETE from classtech_worker  where id = ?' ,str(id) )
+    db.commit()
+    print("commit")
+    flash('A log was successfully DELETED')
+    return redirect(url_for('show_classtech_worker',person_id=person_id))
+
 
 @app.route( '/person/<int:person_id>/afterclass_worker' )
 def show_afterclass_worker(person_id):
@@ -178,11 +224,25 @@ def add_afterclass_worker(person_id):
         abort(401)
     db = get_db()
 
-    db.execute('insert into afterclass_worker (person_id,contestproject,techresearch_swjtu_project,techresearch_etc_newitem,techresearch_etc_olditem,techresearch_etc_module,techresearch_etc_course,techbook,paper_c,paper_issn,paper_noissn,making_nuetiac_days,making_other_days,note) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)',[person_id,request.form[ 'contestproject' ],request.form[ 'techresearch_swjtu_project' ],request.form[ 'techresearch_etc_newitem' ],request.form['techresearch_etc_olditem'],request.form['techresearch_etc_module'],request.form['techresearch_etc_course'],request.form['techbook'],request.form['paper_c'],request.form['paper_issn'],request.form['paper_noissn'],request.form['making_nuetiac_days'],request.form['making_other_days'],request.form['note']])
+    db.execute('insert into afterclass_worker (person_id,contestproject,techresearch_swjtu_project,techresearch_etc_newitem,techresearch_etc_olditem,techresearch_etc_module,techresearch_etc_course,techbook,paper_c,paper_issn,paper_noissn,making_nuetiac_days,making_other_days,misc_workscore,note) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',[person_id,request.form[ 'contestproject' ],request.form[ 'techresearch_swjtu_project' ],request.form[ 'techresearch_etc_newitem' ],request.form['techresearch_etc_olditem'],request.form['techresearch_etc_module'],request.form['techresearch_etc_course'],request.form['techbook'],request.form['paper_c'],request.form['paper_issn'],request.form['paper_noissn'],request.form['making_nuetiac_days'],request.form['making_other_days'],request.form['misc_workscore'],request.form['note']])
     db.commit()
     print("commit")
     flash('New classtech_worker log was successfully inserted')
     return redirect(url_for('show_afterclass_worker',person_id = person_id))
+
+
+@app.route( '/person/<int:person_id>/afterclass_worker/<int:id>/del' , methods=[ 'get' ])
+def del_afterclass_worker(person_id,id):
+    #print(request.form)
+    if not session.get( 'logged_in' ):
+        abort(401)
+    db = get_db()
+    db.execute('DELETE from afterclass_worker  where id = ?' ,str(id) )
+    db.commit()
+    print("commit")
+    flash('A log was successfully DELETED')
+    return redirect(url_for('show_afterclass_worker',person_id=person_id))
+
 
 
 @app.route( '/person/<int:person_id>/inno_days' )
@@ -204,6 +264,20 @@ def add_inno_days(person_id):
     flash('New inno_days log was successfully inserted')
     return redirect(url_for('show_inno_days',person_id = person_id))
 
+
+@app.route( '/person/<int:person_id>/inno_days/<int:id>/del' , methods=[ 'get' ])
+def del_inno_days(person_id,id):
+    #print(request.form)
+    if not session.get( 'logged_in' ):
+        abort(401)
+    db = get_db()
+    db.execute('DELETE from inno_days  where id = ?' ,str(id) )
+    db.commit()
+    print("commit")
+    flash('A log was successfully DELETED')
+    return redirect(url_for('show_inno_days',person_id=person_id))
+
+
 @app.route( '/person/<int:person_id>/factors_teacher' )
 def show_factors_teacher(person_id):
     db = get_db()
@@ -224,6 +298,20 @@ def add_factors_teacher(person_id):
     flash('New factors_teacher log was successfully inserted')
     return redirect(url_for('show_factors_teacher',person_id = person_id))
 
+@app.route( '/person/<int:person_id>/factors_teacher/<int:id>/del' , methods=[ 'get' ])
+def del_factors_teacher(person_id,id):
+    #print(request.form)
+    if not session.get( 'logged_in' ):
+        abort(401)
+    db = get_db()
+    db.execute('DELETE from factors_teacher  where id = ?' ,str(id) )
+    db.commit()
+    print("commit")
+    flash('A log was successfully DELETED')
+    return redirect(url_for('show_factors_teacher',person_id=person_id))
+
+
+
 @app.route( '/person/<int:person_id>/factors_worker' )
 def show_factors_worker(person_id):
     db = get_db()
@@ -243,6 +331,18 @@ def add_factors_worker(person_id):
     print("commit")
     flash('New factors_worker log was successfully inserted')
     return redirect(url_for('show_factors_worker',person_id = person_id))
+
+@app.route( '/person/<int:person_id>/factors_worker/<int:id>/del' , methods=[ 'get' ])
+def del_factors_worker(person_id,id):
+    #print(request.form)
+    if not session.get( 'logged_in' ):
+        abort(401)
+    db = get_db()
+    db.execute('DELETE from factors_worker  where id = ?' ,str(id) )
+    db.commit()
+    print("commit")
+    flash('A log was successfully DELETED')
+    return redirect(url_for('show_factors_worker',person_id=person_id))
 
 
 
@@ -293,37 +393,77 @@ def report_mywork_teacher(person_id):
         left join afterclass_teacher as aw on p.id = aw.person_id
         left join inno_days as i on p.id = i.person_id
         left join factors_teacher as f on p.id = f.person_id
-        where p.category = 'teacher'
-     ''')
+        where p.category = 'teacher' and p.id = ?
+     ''',str(person_id))
     items = cur.fetchall()
-    item = items[0]
-    print item['name']
-    I = item['inno_days']*0.005
-    S_evaluation = item['s_evaluation']
-    S_environment = item['s_environment']
-    S_temperature = item['s_temperature']
+    info = {}
+    info['person_id'] = person_id;
+    if(len(items) > 0 ):
+        item = items[0]
+        S_evaluation = item['s_evaluation']
+        S_environment = item['s_environment']
+        S_temperature = item['s_temperature']
+        #CLASS TEACH
+        info['G_systemtraining_machanical'] = item['systemtraining_machanical_days']*item['systemtraining_machanical_stucount']/120/24
+        info['G_systemtraining_other'] = item['systemtraining_other_days']*0.005
+        info['G_compulsorycourse'] = item['compulsorycourse_techhour']*item['compulsorycourse_factor']*item['compulsorycourse_stucount']/208/80
+        if(item['elective_isnew'] == 0):
+            info['G_elective'] =item['elective_techhour']*item['elective_stucount']*0.8/208/80
+        else:
+            info['G_elective'] =item['elective_techhour']*item['elective_stucount']*1.05/208/80
+        info['G_graduationproject'] = item['graduationproject_stucount']/20
+        info['G_nuetiac'] = item['nuetiac_sichuan']*0.04+item['nuetiac_nation']*0.16+(item['nuetiac_plan']*0.5+item['nuetiac_make']*0.3+item['nuetiac_swjtu']*0.2)*0.02
+        info['G_make'] = item['make_techdays']*0.005
+        info['G_classtech'] =(item['basictech_days']+item['shortterm_days']*S_temperature)*S_environment/item['totalwork_days']+info['G_systemtraining_machanical']+info['G_systemtraining_other']+info['G_compulsorycourse']+info['G_elective']+info['G_graduationproject']+info['G_nuetiac']+info['G_make']
+        #AFTER CLASS
+        info['G_contestproject'] =item['contestproject_swjtu']*0.03+item['contestproject_sichuan']*0.05+item['contestproject_nation']*0.1+item['customproject']*0.03
+        info['G_techresearch_etc'] = item['techresearch_etc_newitem']+item['techresearch_etc_olditem']+item['techresearch_etc_module']+item['techresearch_etc_course']
+        info['G_paper'] = item['paper_c']*0.1+item['paper_issn']+0.03+item['paper_noissn']*0.01
+        info['G_mapcheck'] =item['mapcheck_count']*0.002
+        info['G_teach_direct'] = item['course_director']*0.15+item['project_director']*0.15+item['master_platfom']*0.15
+        info['G_misc_workscore'] =item['misc_workscore']*(1-info['G_classtech'])*0.2
+        info['G_afterclass'] =info['G_contestproject']+item['master_course']+item['techresearch_swjtu_project']+info['G_techresearch_etc']+item['techbook']+info['G_paper']+info['G_mapcheck']+info['G_teach_direct']+info['G_misc_workscore']
+        #INNOVATION
+        info['I'] = item['inno_days']*0.005
 
-    #Classtech = (item['basictech_days']+ item['shortterm_days']*(S_temperature - 1))/item['totalwork_days']+item['systemtraining_machanical_days']+item['systemtraining_other_days']+item['compulsorycourse_techhour']+item['elective_techhour']
-    print I
-    return render_template( 'report/mywork.html' , info = {'person_id':person_id,'items':items})
+    #print I
+    return render_template( 'report/mywork.html' , info = info)
 
 @app.route( '/person/<int:person_id>/report_mywork_worker' )
 def report_mywork_worker(person_id):
     db = get_db()
     cur = db.execute('''
-        select p.*,cw.* from person as p
+        select * from person as p
         left join classtech_worker as cw on p.id = cw.person_id
         left join afterclass_worker as aw on p.id = aw.person_id
         left join inno_days as i on p.id = i.person_id
         left join factors_worker as f on p.id = f.person_id
-        where p.category = 'worker'
-     ''')
+        where p.category = 'worker' and p.id = ?
+     ''',[person_id])
 
     items = cur.fetchall()
+    print items
     item = items[0]
-    print items['inno_days']
+    S_evaluation = item['s_evaluation']
+    S_environment = item['s_environment']
+    S_temperature = item['s_temperature']
+    info = {}
+    info['person_id'] = person_id;
 
-    return render_template( 'report/mywork.html' , info = {'person_id':person_id,'items':items})
+    #CLASS TEACH
+    info['G_classtech'] =(item['basictech_days']+item['shortterm_days']*S_temperature+item['systemtraining_days']+item['contest_days'])*S_environment/item['totalwork_days']
+    #AFTER CLASS
+    info['G_contestproject']=item['contestproject']*0.005
+    info['G_techresearch_etc']= item['techresearch_etc_newitem']+item['techresearch_etc_olditem']+item['techresearch_etc_module']+item['techresearch_etc_course']
+    info['G_paper'] = item['paper_c']*0.1+item['paper_issn']+0.03+item['paper_noissn']*0.01
+    info['G_nuetiac_make'] =item['making_nuetiac_days']*0.005
+    info['G_other_make'] = item['making_other_days']*0005/7
+    info['G_misc_workscore'] =item['misc_workscore']*(1-info['G_classtech'])*0.8
+    info['G_afterclass'] =info['G_contestproject']+item['techresearch_swjtu_project']+info['G_techresearch_etc']+item['techbook']+info['G_paper']+info['G_nuetiac_make']+info['G_other_make']+info['G_misc_workscore']
+    #INNOVATION
+    info['I'] = item['inno_days']*0.005
+    #print I
+    return render_template( 'report/mywork.html' , info=info)
 
 
 

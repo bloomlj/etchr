@@ -1,20 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
   {% if session.logged_in %}
-    <form action="{{ url_for('add_factors_worker',person_id =info['person_id'] ) }}" method=post class=add-entry>
-      <dl>
-        <dt>S权重:
-        <dd><input type=text size=30 name=s_evaluation>
-          <dt>S环境系数:
-          <dd><input type=text size=30 name=s_environment>
-            <dt>S高温系数:
-            <dd><input type=text size=30 name=s_temperature>
-        <dt>备注:
-        <dd><textarea name="note"></textarea>
-       <dd><input type=submit value=“提交”>
-      </dl>
-    </form>
-  {% endif %}
+
   <ul class=entries>
   {% for item in info['items'] %}
     <li>
@@ -22,8 +9,25 @@
       S权重：{{ item.s_evaluation}}<br/>
       S环境系数：{{ item.s_environment}}<br/>
       S高温系数：{{ item.s_temperature}}<br/>
+      <a href="{{url_for('del_factors_worker',person_id=item.person_id,id=item.id)}}">删除</a>
+
   {% else %}
     <li><em>Unbelievable.  No entries here so far</em>
+      <form action="{{ url_for('add_factors_worker',person_id =info['person_id'] ) }}" method=post class=add-entry>
+        <dl>
+          <dt>S权重:
+          <dd><input type=text size=30 name=s_evaluation>
+            <dt>S环境系数:
+            <dd><input type=text size=30 name=s_environment>
+              <dt>S高温系数:
+              <dd><input type=text size=30 name=s_temperature>
+          <dt>备注:
+          <dd><textarea name="note"></textarea>
+         <dd><input type=submit value=“提交”>
+        </dl>
+      </form>
   {% endfor %}
   </ul>
+  {% endif %}
+
 {% endblock %}

@@ -1,27 +1,38 @@
 {% extends "layout.html" %}
 {% block body %}
   {% if session.logged_in %}
-    <form action="{{ url_for('add_classtech_worker',person_id =info['person_id'] ) }}" method=post class=add-entry>
-      <dl>
-        <dt>基础教学天数:
-        <dd><input type=text size=30 name=basictech_days>
-        <dt>综合训练天数:
-        <dd><input type=input size="30" name="systemtraining_days" />
-          <dt>竞赛教学天数:
-          <dd><input type=input size="30" name="contest_days" />
-            <dt>短学期教学天数:
-            <dd><input type=input size="30" name="shortterm_days" />
-            <dt>备注:
-            <dd><textarea name="note"></textarea>
-       <dd><input type=submit value=“提交”>
-      </dl>
-    </form>
-  {% endif %}
+
   <ul class=entries>
   {% for item in info['items'] %}
-    <li><h2>{{ item.person_id }}</h2>{{ item.basictech_days }}
+    <li><h2>{{ item.person_id }}</h2>
+      基础教学天数:{{ item.basictech_days }}<br/>
+      综合训练天数:{{systemtraining_days}}<br/>
+      竞赛教学天数:{{contest_days}}<br/>
+      短学期教学天数:{{shortterm_days}}<br/>
+      总工作天数:{{totalwork_days}}<br/>
+      note:{{note}}<br/>
+      <a href="{{url_for('del_classtech_worker',person_id=item.person_id,id=item.id)}}">删除</a>
   {% else %}
     <li><em>Unbelievable.  No entries here so far</em>
+      <form action="{{ url_for('add_classtech_worker',person_id =info['person_id'] ) }}" method=post class=add-entry>
+        <dl>
+          <dt>基础教学天数:
+          <dd><input type=text size=30 name=basictech_days>
+          <dt>综合训练天数:
+          <dd><input type=input size="30" name="systemtraining_days" />
+            <dt>竞赛教学天数:
+            <dd><input type=input size="30" name="contest_days" />
+              <dt>短学期教学天数:
+              <dd><input type=input size="30" name="shortterm_days" />
+                <dt>总工作天数:
+                <dd><input type=input size="30" name="totalwork_days" />
+              <dt>备注:
+              <dd><textarea name="note"></textarea>
+         <dd><input type=submit value=“提交”>
+        </dl>
+      </form>
   {% endfor %}
   </ul>
+  {% endif %}
+
 {% endblock %}

@@ -1,22 +1,25 @@
 {% extends "layout.html" %}
 {% block body %}
   {% if session.logged_in %}
-    <form action="{{ url_for('add_inno_days',person_id =info['person_id'] ) }}" method=post class=add-entry>
-      <dl>
-        <dt>折合后创新实践工作日数:
-        <dd><input type=text size=30 name=inno_days>
-        <dt>备注:
-        <dd><textarea name="note"></textarea>
-       <dd><input type=submit value=“提交”>
-      </dl>
-    </form>
-  {% endif %}
+
   <ul class=entries>
   {% for item in info['items'] %}
     <li><h2>{{ item.person_id }}</h2>
-      折合后创新实践工作日数：{{ item.inno_days }}
+      折合后创新实践工作日数：{{ item.inno_days }}<br/>
+      <a href="{{url_for('del_inno_days',person_id=item.person_id,id=item.id)}}">删除</a>
   {% else %}
     <li><em>Unbelievable.  No entries here so far</em>
+      <form action="{{ url_for('add_inno_days',person_id =info['person_id'] ) }}" method=post class=add-entry>
+        <dl>
+          <dt>折合后创新实践工作日数:
+          <dd><input type=text size=30 name=inno_days>
+          <dt>备注:
+          <dd><textarea name="note"></textarea>
+         <dd><input type=submit value=“提交”>
+        </dl>
+      </form>
   {% endfor %}
   </ul>
+  {% endif %}
+
 {% endblock %}

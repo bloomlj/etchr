@@ -23,11 +23,15 @@ create table classtech_teacher (
   systemtraining_machanical_days NUMERIC not null,--机械综合训练天数
   systemtraining_machanical_stucount NUMERIC not null,--机械综合训练人数
   systemtraining_other_days NUMERIC not null,--其它综合训练天数
-  compulsorycourse_techhour NUMERIC not null,--必修课学时
+  compulsorycourse_techhour NUMERIC not null,--必修、限选课学时
+  compulsorycourse_factor NUMERIC not null, --必修、限选课系数
   compulsorycourse_stucount NUMERIC not null,--必修课人数
   elective_techhour NUMERIC not null,--选修课学时
+  elective_isnew integer not null,--是否新开课,0否，1是
   elective_stucount NUMERIC not null,--选修人数
   graduationproject_stucount NUMERIC not null,--毕业设计人数
+  nuetiac_plan NUMERIC not null, --工程训练大赛方案指导
+  nuetiac_make NUMERIC not null, --工程训练大赛制作指导
   nuetiac_swjtu NUMERIC not null,--工程训练大赛校赛National Undergraduate Engineering Training NUMERICegration Ability Competition
   nuetiac_sichuan NUMERIC not null,--工程训练大赛省赛
   nuetiac_nation NUMERIC not null,--工程训练大赛国赛
@@ -58,6 +62,7 @@ create table afterclass_teacher (
   course_director NUMERIC not null,--课程负责人
   project_director NUMERIC not null,--项目负责人
   master_platfom NUMERIC not null, --研究生平台
+  misc_workscore NUMERIC not null,--其它工作表现
   created_time datetime now,
   updated_time datetime now,
   note text not null
@@ -72,6 +77,7 @@ create table classtech_worker (
   systemtraining_days NUMERIC not null,--综合训练天数
   contest_days NUMERIC not null,--竞赛教学天数
   shortterm_days NUMERIC not null,--短学期教学天数
+  totalwork_days NUMERIC not null,--总工作天数
   created_time datetime now,
   updated_time datetime now,
   note text not null
@@ -93,6 +99,7 @@ create table afterclass_worker (
   paper_noissn NUMERIC not null,--无公开刊号论文
   making_nuetiac_days NUMERIC not null,--工程训练大赛加工
   making_other_days NUMERIC not null,--其它加工
+  misc_workscore NUMERIC not null,--其它工作表现
   created_time datetime now,
   updated_time datetime now,
   note text not null

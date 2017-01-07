@@ -1,52 +1,8 @@
 {% extends "layout.html" %}
 {% block body %}
   {% if session.logged_in %}
-    <form action="{{ url_for('add_afterclass_teacher',person_id =info['person_id'] ) }}" method=post class=add-entry>
-      <dl>
-        <dt>实验竞赛活动项目校级:
-        <dd><input type=text size=30 name=contestproject_swjtu>
-        <dt>实验竞赛活动省级项目:
-        <dd><input type=input size="30" name="contestproject_sichuan" />
-          <dt>国家级实验竞赛活动:
-          <dd><input type=input size="30" name="contestproject_nation" />
-            <dt>个性化实验竞赛项目:
-            <dd><input type=input size="30" name="customproject" />
-              <dt>研究生课程:
-              <dd><input type=input size="30" name="master_course" />
-                <dt>学校教改项目:
-                <dd><input type=input size="30" name="techresearch_swjtu_project" />
-                  <dt>中心教改项目新开项目:
-                  <dd><input type=input size="30" name="techresearch_etc_newitem" />
-                    <dt>中心教改项目现有项目改革:
-                    <dd><input type=input size="30" name="techresearch_etc_olditem" />
-                      <dt>中心教改项目模块改革:
-                      <dd><input type=input size="30" name="techresearch_etc_module" />
-                        <dt>中心教改项目课程改革:
-                        <dd><input type=input size="30" name="techresearch_etc_course" />
 
 
-                          <dt>教材:
-                          <dd><input type=input size="30" name="techbook" />
-                            <dt>C级论文:
-                            <dd><input type=input size="30" name="paper_c" />
-                              <dt>有公开刊号论文:
-                              <dd><input type=input size="30" name="paper_issn" />
-                                <dt>无公开刊号论文:
-                                <dd><input type=input size="30" name="paper_noissn" />
-                                  <dt>审核图纸:
-                                  <dd><input type=input size="30" name="mapcheck_count" />
-                                    <dt>课程负责人:
-                                    <dd><input type=input size="30" name="course_director" />
-                                      <dt>项目负责人:
-                                      <dd><input type=input size="30" name="project_director" />
-                                        <dt>研究生平台:
-                                        <dd><input type=input size="30" name="master_platfom" />
-                                    <dt>备注:
-                                    <dd><textarea name="note"></textarea>
-       <dd><input type=submit value=“提交”>
-      </dl>
-    </form>
-  {% endif %}
   <ul class=entries>
   {% for item in info['items'] %}
     <li><h2>{{ item.person_id }}</h2>
@@ -67,9 +23,57 @@
       审核图纸:{{item.mapcheck_count}} <br/>
       课程负责人:{{item.course_director}} <br/>
       项目负责人:{{item.project_director}} <br/>
-      研究生平台:{{item.master_platfom}}
+      研究生平台:{{item.master_platfom}}<br/>
+      <a href="{{url_for('del_afterclass_teacher',person_id=item.person_id,id=item.id)}}">删除</a>
+
   {% else %}
     <li><em>Unbelievable.  No entries here so far</em>
+      <form action="{{ url_for('add_afterclass_teacher',person_id =info['person_id'] ) }}" method=post class=add-entry>
+        <dl>
+          <dt>实验竞赛活动项目校级:
+          <dd><input type=text size=30 name=contestproject_swjtu>
+          <dt>实验竞赛活动省级项目:
+          <dd><input type=input size="30" name="contestproject_sichuan" />
+            <dt>国家级实验竞赛活动:
+            <dd><input type=input size="30" name="contestproject_nation" />
+              <dt>个性化实验竞赛项目:
+              <dd><input type=input size="30" name="customproject" />
+                <dt>研究生课程:
+                <dd><input type=input size="30" name="master_course" />
+                  <dt>学校教改项目:
+                  <dd><input type=input size="30" name="techresearch_swjtu_project" />
+                    <dt>中心教改项目新开项目:
+                    <dd><input type=input size="30" name="techresearch_etc_newitem" />
+                      <dt>中心教改项目现有项目改革:
+                      <dd><input type=input size="30" name="techresearch_etc_olditem" />
+                        <dt>中心教改项目模块改革:
+                        <dd><input type=input size="30" name="techresearch_etc_module" />
+                          <dt>中心教改项目课程改革:
+                          <dd><input type=input size="30" name="techresearch_etc_course" />
+                            <dt>教材:
+                            <dd><input type=input size="30" name="techbook" />
+                              <dt>C级论文:
+                              <dd><input type=input size="30" name="paper_c" />
+                                <dt>有公开刊号论文:
+                                <dd><input type=input size="30" name="paper_issn" />
+                                  <dt>无公开刊号论文:
+                                  <dd><input type=input size="30" name="paper_noissn" />
+                                    <dt>审核图纸:
+                                    <dd><input type=input size="30" name="mapcheck_count" />
+                                      <dt>课程负责人:
+                                      <dd><input type=input size="30" name="course_director" />
+                                        <dt>项目负责人:
+                                        <dd><input type=input size="30" name="project_director" />
+                                          <dt>研究生平台:
+                                          <dd><input type=input size="30" name="master_platfom" />
+                                        <dt>其它工作表现:
+                                          <dd><input type=input size="30" name="misc_workscore" />
+                                      <dt>备注:
+                                      <dd><textarea name="note"></textarea>
+         <dd><input type=submit value=“提交”>
+        </dl>
+      </form>
   {% endfor %}
   </ul>
+    {% endif %}
 {% endblock %}

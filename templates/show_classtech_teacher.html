@@ -1,46 +1,8 @@
 {% extends "layout.html" %}
 {% block body %}
   {% if session.logged_in %}
-    <form action="{{ url_for('add_classtech_teacher',person_id =info['person_id'] ) }}" method=post class=add-entry>
-      <dl>
-        <dt>基础教学天数:
-        <dd><input type=text size=30 name=basictech_days>
-        <dt>短学期教学天数:
-        <dd><input type=input size="30" name="shortterm_days" />
-          <dt>总工作天数:
-          <dd><input type=input size="30" name="totalwork_days" />
-            <dt>机械综合训练天数:
-            <dd><input type=input size="30" name="systemtraining_machanical_days" />
-              <dt>机械综合训练人数:
-              <dd><input type=input size="30" name="systemtraining_machanical_stucount" />
-                <dt>其它综合训练天数:
-                <dd><input type=input size="30" name="systemtraining_other_days" />
-                  <dt>必修课学时:
-                  <dd><input type=input size="30" name="compulsorycourse_techhour" />
-                    <dt>必修课人数:
-                    <dd><input type=input size="30" name="compulsorycourse_stucount" />
-                      <dt>选修课学时:
-                      <dd><input type=input size="30" name="elective_techhour" />
-                        <dt>选修人数:
-                        <dd><input type=input size="30" name="elective_stucount" />
 
 
-                          <dt>毕业设计人数:
-                          <dd><input type=input size="30" name="graduationproject_stucount" />
-                            <dt>工程训练大赛校赛:
-                            <dd><input type=input size="30" name="nuetiac_swjtu" />
-                              <dt>工程训练大赛省赛:
-                              <dd><input type=input size="30" name="nuetiac_sichuan" />
-                                <dt>工程训练大赛国赛:
-                                <dd><input type=input size="30" name="nuetiac_nation" />
-                                  <dt>加工指导天数:
-                                  <dd><input type=input size="30" name="make_techdays" />
-                                    <dt>备注:
-                                    <dd><textarea name="note"></textarea>
-       <dd><input type=submit value=“提交”>
-      </dl>
-    </form>
-  {% endif %}
   <ul class=entries>
   {% for item in info['items'] %}
     <li><h2>{{ item.person_id }}</h2>
@@ -51,16 +13,65 @@
       机械综合训练人数:{{item.systemtraining_machanical_stucount}} <br/>
       其它综合训练天数:{{item.systemtraining_other_days}} <br/>
       必修课学时:{{item.compulsorycourse_techhour}} <br/>
+      必修／限选系数：{{item.compulsorycourse_factor}} <br/>
       必修课人数:{{item.compulsorycourse_stucount}} <br/>
       选修课学时:{{item.elective_techhour}} <br/>
+      选修课是否新开:{{item.elective_isnew}}
       选修人数:{{item.elective_stucount}} <br/>
       毕业设计人数:{{item.graduationproject_stucount}} <br/>
       工程训练大赛校赛:{{item.nuetiac_swjtu}} <br/>
       工程训练大赛省赛:{{item.nuetiac_sichuan}} <br/>
       工程训练大赛国赛:{{item.nuetiac_nation}} <br/>
-      加工指导天数:{{item.make_techdays}}
+      加工指导天数:{{item.make_techdays}}<br/>
+      <a href="{{url_for('del_classtech_teacher',person_id=item.person_id,id=item.id)}}">删除</a>
   {% else %}
     <li><em>Unbelievable.  No entries here so far</em>
+      <form action="{{ url_for('add_classtech_teacher',person_id =info['person_id'] ) }}" method=post class=add-entry>
+        <dl>
+          <dt>基础教学天数:
+          <dd><input type=text size=30 name=basictech_days>
+          <dt>短学期教学天数:
+          <dd><input type=input size="30" name="shortterm_days" />
+            <dt>总工作天数:
+            <dd><input type=input size="30" name="totalwork_days" />
+              <dt>机械综合训练天数:
+              <dd><input type=input size="30" name="systemtraining_machanical_days" />
+                <dt>机械综合训练人数:
+                <dd><input type=input size="30" name="systemtraining_machanical_stucount" />
+                  <dt>其它综合训练天数:
+                  <dd><input type=input size="30" name="systemtraining_other_days" />
+                    <dt>必修课学时:
+                    <dd><input type=input size="30" name="compulsorycourse_techhour" />
+                      <dt>必修课系数:
+                      <dd><input type=input size="30" name="compulsorycourse_factor" />
+                      <dt>必修课人数:
+                      <dd><input type=input size="30" name="compulsorycourse_stucount" />
+                        <dt>选修课学时:
+                        <dd><input type=input size="30" name="elective_techhour" />
+                          <dt>选修课是否新开:
+                          <dd><input type=input size="30" name="elective_isnew" />
+                          <dt>选修人数:
+                          <dd><input type=input size="30" name="elective_stucount" />
+                          <dt>毕业设计人数:
+                          <dd><input type=input size="30" name="graduationproject_stucount" />
+                            <dt>工程训练大赛方案指导:
+                            <dd><input type=input size="30" name="nuetiac_plan" />
+                              <dt>工程训练大赛制作指导:
+                              <dd><input type=input size="30" name="nuetiac_make" />
+                          <dt>工程训练大赛校赛:
+                          <dd><input type=input size="30" name="nuetiac_swjtu" />
+                          <dt>工程训练大赛省赛:
+                          <dd><input type=input size="30" name="nuetiac_sichuan" />
+                          <dt>工程训练大赛国赛:
+                          <dd><input type=input size="30" name="nuetiac_nation" />
+                          <dt>加工指导天数:
+                          <dd><input type=input size="30" name="make_techdays" />
+                          <dt>备注:
+                          <dd><textarea name="note"></textarea>
+         <dd><input type=submit value=“提交”>
+        </dl>
+      </form>
   {% endfor %}
   </ul>
+    {% endif %}
 {% endblock %}
