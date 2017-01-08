@@ -443,7 +443,7 @@ def report_mywork_worker(person_id):
      ''',[person_id])
 
     items = cur.fetchall()
-    print items
+    #print items
     item = items[0]
     S_evaluation = item['s_evaluation']
     S_environment = item['s_environment']
@@ -455,15 +455,17 @@ def report_mywork_worker(person_id):
     info['G_classtech'] =(item['basictech_days']+item['shortterm_days']*S_temperature+item['systemtraining_days']+item['contest_days'])*S_environment/item['totalwork_days']
     #AFTER CLASS
     info['G_contestproject']=item['contestproject']*0.005
-    info['G_techresearch_etc']= item['techresearch_etc_newitem']+item['techresearch_etc_olditem']+item['techresearch_etc_module']+item['techresearch_etc_course']
+    info['G_techresearch_etc']= item['techresearch_etc_newitem']*1.0+item['techresearch_etc_olditem']*1.0+item['techresearch_etc_module']*1.0+item['techresearch_etc_course']*1.0
+
     info['G_paper'] = item['paper_c']*0.1+item['paper_issn']*0.03+item['paper_noissn']*0.01
     info['G_nuetiac_make'] =item['making_nuetiac_days']*0.005
-    info['G_other_make'] = item['making_other_days']*0005/7
+    info['G_other_make'] = item['making_other_days']*0.005/7
     info['G_misc_workscore'] =item['misc_workscore']*(1-info['G_classtech'])*0.8
-    info['G_afterclass'] =info['G_contestproject']+item['techresearch_swjtu_project']+info['G_techresearch_etc']+item['techbook']+info['G_paper']+info['G_nuetiac_make']+info['G_other_make']+info['G_misc_workscore']
+    info['G_afterclass'] =info['G_contestproject']+item['techresearch_swjtu_project']*1.0+info['G_techresearch_etc']+item['techbook']+info['G_paper']+info['G_nuetiac_make']+info['G_other_make']+info['G_misc_workscore']
     #INNOVATION
     info['I'] = item['inno_days']*0.005
-    #print I
+    print item
+    print info
     return render_template( 'report/mywork.html' , info=info)
 
 
