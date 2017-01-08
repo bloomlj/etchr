@@ -105,7 +105,7 @@ def del_person(person_id):
     if not session.get( 'logged_in' ):
         abort(401)
     db = get_db()
-    db.execute('DELETE from  person  where id = ?' ,str(person_id) )
+    db.execute('DELETE from  person  where id = ?' ,(person_id,) )
     db.commit()
     print("commit")
     flash('A person was successfully DELETED')
@@ -115,7 +115,7 @@ def del_person(person_id):
 @app.route( '/person/<int:person_id>/classtech_teacher' )
 def show_classtech_teacher(person_id):
     db = get_db()
-    cur = db.execute( 'select * from classtech_teacher where person_id = ?',str(person_id) )
+    cur = db.execute( 'select * from classtech_teacher where person_id = ?',(person_id,) )
     items = cur.fetchall()
     return render_template( 'show_classtech_teacher.html' , info={'items':items,'person_id':person_id})
 
@@ -137,7 +137,7 @@ def del_classtech_teacher(person_id,id):
     if not session.get( 'logged_in' ):
         abort(401)
     db = get_db()
-    db.execute('DELETE from classtech_teacher  where id = ?' ,str(id) )
+    db.execute('DELETE from classtech_teacher  where id = ?' ,(id,) )
     db.commit()
     print("commit")
     flash('A log was successfully DELETED')
@@ -146,7 +146,7 @@ def del_classtech_teacher(person_id,id):
 @app.route( '/person/<int:person_id>/afterclass_teacher' )
 def show_afterclass_teacher(person_id):
     db = get_db()
-    cur = db.execute( 'select * from afterclass_teacher where person_id = ?',str(person_id) )
+    cur = db.execute( 'select * from afterclass_teacher where person_id = ?',(person_id,) )
     items = cur.fetchall()
     return render_template( 'show_afterclass_teacher.html' , info={'items':items,'person_id':person_id})
 
@@ -168,7 +168,7 @@ def del_afterclass_teacher(person_id,id):
     if not session.get( 'logged_in' ):
         abort(401)
     db = get_db()
-    db.execute('DELETE from afterclass_teacher  where id = ?' ,str(id) )
+    db.execute('DELETE from afterclass_teacher  where id = ?' ,(id,) )
     db.commit()
     print("commit")
     flash('A log was successfully DELETED')
@@ -178,7 +178,7 @@ def del_afterclass_teacher(person_id,id):
 @app.route( '/person/<int:person_id>/classtech_worker' )
 def show_classtech_worker(person_id):
     db = get_db()
-    cur = db.execute( 'select * from classtech_worker where person_id = ?',str(person_id) )
+    cur = db.execute( 'select * from classtech_worker where person_id = ?',(person_id,) )
     items = cur.fetchall()
     return render_template( 'show_classtech_worker.html' , info={'items':items,'person_id':person_id})
 
@@ -200,7 +200,7 @@ def del_classtech_worker(person_id,id):
     if not session.get( 'logged_in' ):
         abort(401)
     db = get_db()
-    db.execute('DELETE from classtech_worker  where id = ?' ,str(id) )
+    db.execute('DELETE from classtech_worker  where id = ?' ,(id,) )
     db.commit()
     print("commit")
     flash('A log was successfully DELETED')
@@ -210,7 +210,7 @@ def del_classtech_worker(person_id,id):
 @app.route( '/person/<int:person_id>/afterclass_worker' )
 def show_afterclass_worker(person_id):
     db = get_db()
-    cur = db.execute( 'select * from afterclass_worker where person_id = ?',str(person_id) )
+    cur = db.execute( 'select * from afterclass_worker where person_id = ?',(person_id,) )
     items = cur.fetchall()
     return render_template( 'show_afterclass_worker.html' , info={'items':items,'person_id':person_id})
 
@@ -237,7 +237,7 @@ def del_afterclass_worker(person_id,id):
     if not session.get( 'logged_in' ):
         abort(401)
     db = get_db()
-    db.execute('DELETE from afterclass_worker  where id = ?' ,str(id) )
+    db.execute('DELETE from afterclass_worker  where id = ?' ,(id,) )
     db.commit()
     print("commit")
     flash('A log was successfully DELETED')
@@ -248,7 +248,7 @@ def del_afterclass_worker(person_id,id):
 @app.route( '/person/<int:person_id>/inno_days' )
 def show_inno_days(person_id):
     db = get_db()
-    cur = db.execute( 'select * from inno_days where person_id = ?',str(person_id) )
+    cur = db.execute( 'select * from inno_days where person_id = ?',(person_id,) )
     items = cur.fetchall()
     return render_template( 'show_inno_days.html' , info={'items':items,'person_id':person_id})
 
@@ -271,7 +271,7 @@ def del_inno_days(person_id,id):
     if not session.get( 'logged_in' ):
         abort(401)
     db = get_db()
-    db.execute('DELETE from inno_days  where id = ?' ,str(id) )
+    db.execute('DELETE from inno_days  where id = ?' ,(id,) )
     db.commit()
     print("commit")
     flash('A log was successfully DELETED')
@@ -281,7 +281,7 @@ def del_inno_days(person_id,id):
 @app.route( '/person/<int:person_id>/factors_teacher' )
 def show_factors_teacher(person_id):
     db = get_db()
-    cur = db.execute( 'select * from factors_teacher where person_id = ?',str(person_id) )
+    cur = db.execute( 'select * from factors_teacher where person_id = ?',(person_id,) )
     items = cur.fetchall()
     return render_template( 'show_factors_teacher.html' , info={'items':items,'person_id':person_id})
 
@@ -304,7 +304,7 @@ def del_factors_teacher(person_id,id):
     if not session.get( 'logged_in' ):
         abort(401)
     db = get_db()
-    db.execute('DELETE from factors_teacher  where id = ?' ,str(id) )
+    db.execute('DELETE from factors_teacher  where id = ?' ,(id,) )
     db.commit()
     print("commit")
     flash('A log was successfully DELETED')
@@ -315,7 +315,7 @@ def del_factors_teacher(person_id,id):
 @app.route( '/person/<int:person_id>/factors_worker' )
 def show_factors_worker(person_id):
     db = get_db()
-    cur = db.execute( 'select * from factors_worker where person_id = ?',str(person_id) )
+    cur = db.execute( 'select * from factors_worker where person_id = ?',(person_id,) )
     items = cur.fetchall()
     return render_template( 'show_factors_worker.html' , info={'items':items,'person_id':person_id})
 
@@ -338,7 +338,7 @@ def del_factors_worker(person_id,id):
     if not session.get( 'logged_in' ):
         abort(401)
     db = get_db()
-    db.execute('DELETE from factors_worker  where id = ?' ,str(id) )
+    db.execute('DELETE from factors_worker  where id = ?' ,(id,) )
     db.commit()
     print("commit")
     flash('A log was successfully DELETED')
@@ -394,7 +394,7 @@ def report_mywork_teacher(person_id):
         left join inno_days as i on p.id = i.person_id
         left join factors_teacher as f on p.id = f.person_id
         where p.category = 'teacher' and p.id = ?
-     ''',str(person_id))
+     ''',(person_id,))
     items = cur.fetchall()
     info = {}
     info['person_id'] = person_id;
@@ -404,27 +404,28 @@ def report_mywork_teacher(person_id):
         S_environment = item['s_environment']
         S_temperature = item['s_temperature']
         #CLASS TEACH
-        info['G_systemtraining_machanical'] = item['systemtraining_machanical_days']*item['systemtraining_machanical_stucount']/120/24
+        info['G_systemtraining_machanical'] = 1.0*item['systemtraining_machanical_days']*item['systemtraining_machanical_stucount']/120/24
         info['G_systemtraining_other'] = item['systemtraining_other_days']*0.005
-        info['G_compulsorycourse'] = item['compulsorycourse_techhour']*item['compulsorycourse_factor']*item['compulsorycourse_stucount']/208/80
+        info['G_compulsorycourse'] = item['compulsorycourse_techhour']*item['compulsorycourse_factor']*item['compulsorycourse_stucount']/208/80.0
         if(item['elective_isnew'] == 0):
             info['G_elective'] =item['elective_techhour']*item['elective_stucount']*0.8/208/80
         else:
             info['G_elective'] =item['elective_techhour']*item['elective_stucount']*1.05/208/80
-        info['G_graduationproject'] = item['graduationproject_stucount']/20
+        info['G_graduationproject'] = item['graduationproject_stucount']/20.0
         info['G_nuetiac'] = item['nuetiac_sichuan']*0.04+item['nuetiac_nation']*0.16+(item['nuetiac_plan']*0.5+item['nuetiac_make']*0.3+item['nuetiac_swjtu']*0.2)*0.02
         info['G_make'] = item['make_techdays']*0.005
         info['G_classtech'] =(item['basictech_days']+item['shortterm_days']*S_temperature)*S_environment/item['totalwork_days']+info['G_systemtraining_machanical']+info['G_systemtraining_other']+info['G_compulsorycourse']+info['G_elective']+info['G_graduationproject']+info['G_nuetiac']+info['G_make']
         #AFTER CLASS
         info['G_contestproject'] =item['contestproject_swjtu']*0.03+item['contestproject_sichuan']*0.05+item['contestproject_nation']*0.1+item['customproject']*0.03
         info['G_techresearch_etc'] = item['techresearch_etc_newitem']+item['techresearch_etc_olditem']+item['techresearch_etc_module']+item['techresearch_etc_course']
-        info['G_paper'] = item['paper_c']*0.1+item['paper_issn']+0.03+item['paper_noissn']*0.01
+        info['G_paper'] = item['paper_c']*0.1+item['paper_issn']*0.03+item['paper_noissn']*0.01
         info['G_mapcheck'] =item['mapcheck_count']*0.002
         info['G_teach_direct'] = item['course_director']*0.15+item['project_director']*0.15+item['master_platfom']*0.15
-        info['G_misc_workscore'] =item['misc_workscore']*(1-info['G_classtech'])*0.2
+        info['G_misc_workscore'] =item['misc_workscore']*abs(1-info['G_classtech'])*0.2
         info['G_afterclass'] =info['G_contestproject']+item['master_course']+item['techresearch_swjtu_project']+info['G_techresearch_etc']+item['techbook']+info['G_paper']+info['G_mapcheck']+info['G_teach_direct']+info['G_misc_workscore']
         #INNOVATION
         info['I'] = item['inno_days']*0.005
+        print info
 
     #print I
     return render_template( 'report/mywork.html' , info = info)
@@ -455,7 +456,7 @@ def report_mywork_worker(person_id):
     #AFTER CLASS
     info['G_contestproject']=item['contestproject']*0.005
     info['G_techresearch_etc']= item['techresearch_etc_newitem']+item['techresearch_etc_olditem']+item['techresearch_etc_module']+item['techresearch_etc_course']
-    info['G_paper'] = item['paper_c']*0.1+item['paper_issn']+0.03+item['paper_noissn']*0.01
+    info['G_paper'] = item['paper_c']*0.1+item['paper_issn']*0.03+item['paper_noissn']*0.01
     info['G_nuetiac_make'] =item['making_nuetiac_days']*0.005
     info['G_other_make'] = item['making_other_days']*0005/7
     info['G_misc_workscore'] =item['misc_workscore']*(1-info['G_classtech'])*0.8
